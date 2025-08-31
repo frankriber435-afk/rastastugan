@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastastugan Restaurang & Pizzeria - Meny</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #FFD700;
+            --light: #F5F5F5;
+            --dark: #333333;
+            --accent: #006400;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3') center/cover;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+        
+        .logo {
+            max-width: 200px;
+            margin: 0 auto 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .logo img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .restaurant-name {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--secondary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .hours {
+            background-color: var(--primary);
+            padding: 0.8rem;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        nav {
+            background-color: var(--primary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary);
+            position: relative;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 0.5rem auto;
+        }
+        
+        .menu-category {
+            margin-bottom: 3rem;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-header {
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #ddd;
+            padding: 0.8rem 0;
+        }
+        
+        .item-name {
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .item-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: var(--primary);
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .special-offer {
+            background-color: #fff9db;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .lunch-section {
+            background-color: #e6f7ff;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .lunch-title {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #555;
+        }
+        
+        @media (max-width: 768px) {
+            .restaurant-name {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                gap: 0.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+            
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- Placeholder for logo -->
+            <div style="background-color: var(--secondary); color: var(--primary); height: 100px; width: 100px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin: 0 auto;">
+                RS
+            </div>
+        </div>
+        <h1 class="restaurant-name">Rastastugan</h1>
+        <p class="tagline">Restaurang & Pizzeria - It's good to the last slice</p>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>072 288 22 59</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Gimsbärke 336, 781 90 Borlänge</span>
+            </div>
+        </div>
+        
+        <div class="hours">
+            <i class="fas fa-clock"></i> Öppet alla dagar 11.00 - 21.00
+        </div>
+    </header>
+    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#kebab">Kebab</a></li>
+            <li><a href="#hamburgare">Hamburgare</a></li>
+            <li><a href="#a-la-carte">A La Carte</a></li>
+            <li><a href="#pasta">Pasta</a></li>
+            <li><a href="#lunch">Dagens Lunch</a></li>
+            <li><a href="#pizza">Pizza</a></li>
+            <li><a href="#sallader">Sallader</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <!-- Kebab Section -->
+        <section id="kebab" class="menu-category">
+            <div class="category-header">Kebabrätter</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">77. Kebab med bröd</div>
+                        <div class="item-description">Kebabkött (nötkött)</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">78. Kebabrulle</div>
+                        <div class="item-description">Kebabkött (nötkött)</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">79. Super rulle</div>
+                        <div class="item-description">Kebabkött (nötkött), pommes frites</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">80. Kebabtallrik</div>
+                        <div class="item-description">Kebabkött (nötkött)</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">81. Kebabtallrik med ris</div>
+                        <div class="item-description">Kebabkött (nötkött)</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">82. Kebabmål</div>
+                        <div class="item-description">Inkl. 33cl dryck, kebab med bröd, pommes frites, Kebabkött</div>
+                    </div>
+                    <div class="item-price">120:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">83. Gyros med bröd</div>
+                        <div class="item-description">Kebabkött (fläskkarré)</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">84. Gyrosrulle</div>
+                        <div class="item-description">Kebabkött (fläskkarré)</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">85. Gyrostallrik</div>
+                        <div class="item-description">Kebabkött (fläskkarré)</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">86. Gyrostallrik med ris</div>
+                        <div class="item-description">Kebabkött (fläskkarré)</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">87. Kyckling med bröd</div>
+                        <div class="item-description">Kyckling</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">88. Kycklingrulle</div>
+                        <div class="item-description">Kyckling</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">89. Kycklingtallrik</div>
+                        <div class="item-description">Kyckling</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">90. Kycklingtallrik med ris</div>
+                        <div class="item-description">Kyckling</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">91. Falafelrulle</div>
+                        <div class="item-description">Falafel</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">92. Falafeltallrik</div>
+                        <div class="item-description">Falafel</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">93. Ost och skinkrulle</div>
+                        <div class="item-description">Ost, skinka</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">94. Räkrulle</div>
+                        <div class="item-description">Räkor</div>
+                    </div>
+                    <div class="item-price">105:-</div>
+                </div>
+            </div>
+            <div class="special-offer">
+                <strong>Alla kebabrätter inkluderar:</strong> Isbergssallad, gurka, feferoni, lök, tomater (färska). Välj mild, mellan eller stark sås.
+            </div>
+        </section>
+        
+        <!-- Hamburgare Section -->
+        <section id="hamburgare" class="menu-category">
+            <div class="category-header">Hamburgare</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">95. Hamburgare 90g</div>
+                    </div>
+                    <div class="item-price">70:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">96. Hamburger meny 90g</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">97. Ostburgare 90g</div>
+                    </div>
+                    <div class="item-price">75:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">98. Hamburgare 150g</div>
+                    </div>
+                    <div class="item-price">80:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">99. Hamburger meny 150g</div>
+                    </div>
+                    <div class="item-price">100:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">100. Ostburgare 150g</div>
+                    </div>
+                    <div class="item-price">85:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">101. Hamburgare 200g</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">102. Hamburger meny 200g</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">103. Ostburgare 200g</div>
+                    </div>
+                    <div class="item-price">95:-</div>
+                </div>
+            </div>
+            <div class="special-offer">
+                <strong>Alla hamburgare inkluderar:</strong> Ketchup, senap, isbergssallad, gurka, tomater (färska), lök, hamburgardressing.
+            </div>
+        </section>
+        
+        <!-- A La Carte Section -->
+        <section id="a-la-carte" class="menu-category">
+            <div class="category-header">A La Carte</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">104. Pytti panna</div>
+                        <div class="item-description">Serveras med rödbetor och stekt ägg, gurka, tomater (färska) isbergssallad</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">105. Lövbit</div>
+                        <div class="item-description">Gurka, tomater (färska) isbergssallad, bearnaisesås</div>
+                    </div>
+                    <div class="item-price">120:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">106. Rödspätta</div>
+                        <div class="item-description">Gurka, tomater (färska) isbergssallad, remouladsås</div>
+                    </div>
+                    <div class="item-price">120:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">107. Schnitzel</div>
+                        <div class="item-description">Gurka, tomater (färska) isbergssallad, bearnaisesås</div>
+                    </div>
+                    <div class="item-price">120:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">108. Fish n' Chips</div>
+                        <div class="item-description">Gurka, tomater (färska) isbergssallad, remouladsås</div>
+                    </div>
+                    <div class="item-price">120:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">109. Chickbits</div>
+                        <div class="item-description">Tomater (färska) gurka, isbergssallad, currysås</div>
+                    </div>
+                    <div class="item-price">90:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">110. Black and White</div>
+                        <div class="item-description">Oxfilé, fläskfilé, rödvinssås, bearnaisesås</div>
+                    </div>
+                    <div class="item-price">225:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">111. Biffstek</div>
+                        <div class="item-description">Stekt lök, bearnaisesås</div>
+                    </div>
+                    <div class="item-price">155:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">112. Pepparstek</div>
+                        <div class="item-description">Oxfilé, grönsaker, pepparsås</div>
+                    </div>
+                    <div class="item-price">200:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">113. Fläskfilé</div>
+                        <div class="item-description">Fläskfilé, bearnaisesås</div>
+                    </div>
+                    <div class="item-price">150:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">114. Kycklingfilé</div>
+                        <div class="item-description">Kycklingfilé, currysås</div>
+                    </div>
+                    <div class="item-price">135:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">115. Oxfilé</div>
+                        <div class="item-description">Oxfilé, bearnaisesås, rödvinssås</div>
+                    </div>
+                    <div class="item-price">205:-</div>
+                </div>
+            </div>
+            <div class="special-offer">
+                <strong>Välj tillbehör:</strong> Pommes frites, klyft potatis eller stekt potatis
+            </div>
+        </section>
+        
+        <!-- Pasta Section -->
+        <section id="pasta" class="menu-category">
+            <div class="category-header">Pasta</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">116. Pasta Bolognese</div>
+                        <div class="item-description">Köttfärs</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">117. Pasta Indiana</div>
+                        <div class="item-description">Kyckling, ananas, svamp, curry</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">118. Pasta Carbonara</div>
+                        <div class="item-description">Skinka, räkor</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">119. Pasta Husets</div>
+                        <div class="item-description">Oxfilé, lök, svamp, pepparsås</div>
+                    </div>
+                    <div class="item-price">110:-</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lunch Section -->
+        <section id="lunch" class="lunch-section">
+            <h2 class="lunch-title">Dagens Lunch 99:-</h2>
+            <p>Vardagar kl 11.00 - 14.00</p>
+            <p><strong>33cl dricka, salladsbuffe, nybakat bröd & kaffe ingår</strong></p>
+            
+            <div class="menu-items" style="margin-top: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="menu-item">
+                    <div class="item-name">Chikbits med Pommes</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Pytt i Panna</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Rödspätta</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Schnitzel</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Kyckling med bröd</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Fish n' Chips</div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-name">Lövbit</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pizza Section -->
+        <h2 class="section-title" id="pizza">Pizzor</h2>
+        
+        <!-- Class 1 Pizza -->
+        <section class="menu-category">
+            <div class="category-header">Pizzor Klass 1 - 95:-</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">1. Margherita</div>
+                        <div class="item-description">Tomatsås, ost</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">2. Vesuvio</div>
+                        <div class="item-description">Skinka</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">3. Hawaii</div>
+                        <div class="item-description">Skinka, ananas</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">4. Bussola</div>
+                        <div class="item-description">Skinka, räkor</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">5. Capricciosa</div>
+                        <div class="item-description">Skinka, champinjoner (färska)</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">6. Opera</div>
+                        <div class="item-description">Skinka, tonfisk</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">7. Calzone (inbakad)</div>
+                        <div class="item-description">Skinka</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">8. Bologna</div>
+                        <div class="item-description">Köttfärs</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">9. Altono</div>
+                        <div class="item-description">Tonfisk, lök</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">10. Marinara</div>
+                        <div class="item-description">Räkor, musslor</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">11. Sorento</div>
+                        <div class="item-description">Bacon, ägg, lök</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">12. Africana</div>
+                        <div class="item-description">Ananas, banan, curry</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">13. Funghi</div>
+                        <div class="item-description">Champinjoner (färska)</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">14. Salami</div>
+                        <div class="item-description">Salami, paprika (färska)</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">15. Vegetaris</div>
+                        <div class="item-description">Champinjoner (färska), tomater (färska), sparris, paprika (färska), oliver, lök</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">16. Bella</div>
+                        <div class="item-description">Räkor, champinjoner (färska)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="special-offer">
+                <strong>Barnpizza: 90:- | Familjepizza: 235:-</strong>
+            </div>
+        </section>
+        
+        <!-- Additional pizza sections would follow the same pattern -->
+        
+        <!-- Sallader Section -->
+        <section id="sallader" class="menu-category">
+            <div class="category-header">Sallader - 100:-</div>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">71. Kebabsallad</div>
+                        <div class="item-description">Kebabkött (nötkött), lök, feferoni</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">72. Kycklingsallad</div>
+                        <div class="item-description">Kyckling, ananas, champinjoner (färska)</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">73. Tonfiskallad</div>
+                        <div class="item-description">Tonfisk, paprika (färska), citron, lök</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">74. Vegetarisk sallad</div>
+                        <div class="item-description">Champinjoner (färska), sparris, oliver, paprika (färska)</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">75. Ost- och Skinksallad</div>
+                        <div class="item-description">Ost, Skinka</div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div>
+                        <div class="item-name">76. Räksallad</div>
+                        <div class="item-description">Räkor, citron, paprika (färska)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="special-offer">
+                <strong>Alla sallader inkluderar:</strong> Isbergssallad, tomater, gurka & valfri sås
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Kontakt</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Gimsbärke 336, 781 90 Borlänge</p>
+                <p><i class="fas fa-phone"></i> 072 288 22 59</p>
+                <p><i class="fas fa-envelope"></i> info@rastastugan.se</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Öppettider</h3>
+                <p>Måndag - Söndag: 11.00 - 21.00</p>
+                <p>Lunch serveras vardagar: 11.00 - 14.00</p>
+                <p>Vi har fullständiga rättigheter</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Följ oss</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p style="margin-top: 1rem;">Avhämtning och servering</p>
+                <p>It's good to the last slice!</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 Rastastugan Restaurang & Pizzeria. Alla rättigheter förbehållna.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Highlight current section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
